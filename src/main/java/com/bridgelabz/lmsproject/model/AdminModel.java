@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table (name = "lmsproject")
+@Table (name = "admintable")
 public class AdminModel {
 
     @Id
@@ -17,7 +17,7 @@ public class AdminModel {
     private Long adminId;
     private String firstName;
     private String lastName;
-    private int mobile;
+    private long mobile;
     private String emailId;
     private String profilePath;
     private String status;

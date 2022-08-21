@@ -6,22 +6,23 @@ import com.bridgelabz.lmsproject.service.ICandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/lmsprojectnew")
+@RequestMapping("/candidate")
 public class CandidateController {
 
     @Autowired
     ICandidateService candidateService;
 
     @PostMapping("addcandidate")
-    public CandidateModel addCandidate(@RequestBody CandidateDTO candidateDTO){
+    public CandidateModel addCandidate(@Valid @RequestBody CandidateDTO candidateDTO){
         return candidateService.addCandidate(candidateDTO);
     }
 
     @PutMapping("update/{id}")
-    public CandidateModel updateCandidate(@RequestHeader String token, @RequestBody CandidateDTO candidateDTO, @PathVariable Long id){
+    public CandidateModel updateCandidate(@RequestHeader String token, @Valid @RequestBody CandidateDTO candidateDTO, @PathVariable Long id){
         return candidateService.updadateCandidate(id, token, candidateDTO);
     }
 

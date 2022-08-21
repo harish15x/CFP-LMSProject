@@ -11,14 +11,14 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("lmsproject")
+@RequestMapping("admin")
 public class AdminController {
 
        @Autowired
        IAdminService adminService;
 
-        @PostMapping("addadmin")
-        public AdminModel addAdmin(@RequestBody AdminDTO adminDTO){
+        @PostMapping("/addadmin")
+        public AdminModel addAdmin(@Valid @RequestBody AdminDTO adminDTO){
                 return adminService.addAdmin(adminDTO);
         }
 
