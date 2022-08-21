@@ -13,4 +13,7 @@ public interface IMentorService {
     List<MentorModel> getMentorData(String token);
 
     MentorModel deleteMentor(long id, String token);
+
+
+    List<MentorModel> getById(String employeeId);
 }

@@ -39,10 +39,11 @@ public class MentorController {
             return mentorService.deleteMentor(id, token);
         }
 
-//        @GetMapping("uploadfile")
-//        public MentorModel getdBYId (@RequestHeader ){
-//            return mentorService.getBYId()
-//
-//        }
+        @GetMapping("getbyid")
+        public List<MentorModel> getdBYId (@RequestParam String employeeId   ){
+            return mentorService.getById(employeeId);
+        }
+
+
 
 }

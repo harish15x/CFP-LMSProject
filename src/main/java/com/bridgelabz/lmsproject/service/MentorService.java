@@ -78,4 +78,14 @@ public class MentorService implements IMentorService{
        throw new MentorNotFoundException(400,"Mentor not found");
     }
 
+    @Override
+    public List<MentorModel> getById(String employeeId) {
+        List<MentorModel> isIdPresent = mentorRepository.findAllById(employeeId);
+        if (isIdPresent.isEmpty()){
+            throw new MentorNotFoundException(400,"Mentor does not found by ID ");
+        } else{
+        return isIdPresent;
+        }
+    }
+
 }
