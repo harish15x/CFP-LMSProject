@@ -6,6 +6,7 @@ import com.bridgelabz.lmsproject.model.MentorModel;
 import java.util.List;
 
 public interface IMentorService {
+
     MentorModel addMentor(MentorDTO mentorDTO);
 
     MentorModel updateMentor(String token, MentorDTO mentorDTO, Long id);
@@ -13,7 +14,6 @@ public interface IMentorService {
     List<MentorModel> getMentorData(String token);
 
     MentorModel deleteMentor(long id, String token);
-
 
     List<MentorModel> getById(String employeeId);
 }

@@ -17,7 +17,7 @@ public class AdminModel {
     private Long adminId;
     private String firstName;
     private String lastName;
-    private long mobile;
+    private String mobile;
     private String emailId;
     private String profilePath;
     private String status;
@@ -26,6 +26,7 @@ public class AdminModel {
     private LocalDateTime updateddate;
 
     public AdminModel(AdminDTO adminDTO){
+
         this.firstName = adminDTO.getFirstName();
         this.lastName = adminDTO.getLastName();
         this.mobile = adminDTO.getMobile();
@@ -33,8 +34,6 @@ public class AdminModel {
         this.profilePath = adminDTO.getProfilePath();
         this.status = adminDTO.getStatus();
         this.password = adminDTO.getPassword();
-        this.registereddate = LocalDateTime.now();
-        this.updateddate = LocalDateTime.now();
 
     }
 

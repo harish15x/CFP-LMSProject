@@ -29,52 +29,69 @@ public class AdminService implements IAdminService {
         AdminModel adminModel = new AdminModel(adminDTO);
         adminModel.setRegistereddate(LocalDateTime.now());
         adminRepository.save(adminModel);
-        String body = "Admin is added sucessfully with adminid " + adminModel.getAdminId();
-        String subject = "Admin registration successfully";
+        String body = "admin is added sucessfully with admin id " + adminModel.getAdminId();
+        String subject = "admin registration successfully";
         mailService.send(adminModel.getEmailId(),body, subject);
-        return null;
+        return adminModel;
     }
 
     @Override
     public AdminModel updateAdmin (long id, String token, AdminDTO adminDTO) {
         Long userId = tokenUtil.decodeToken(token);
-        Optional<AdminModel> isAdminPresent = adminRepository.findById(id);
+        Optional<AdminModel> isAdminPresent = adminRepository.findById(userId);
         if (isAdminPresent.isPresent()) {
+            Optional<AdminModel> isAdminsPresent = adminRepository.findById(id);
+            if (isAdminsPresent.isPresent()){
             isAdminPresent.get().setFirstName(adminDTO.getFirstName());
             isAdminPresent.get().setLastName(adminDTO.getLastName());
             isAdminPresent.get().setMobile(adminDTO.getMobile());
             isAdminPresent.get().setEmailId(adminDTO.getEmailId());
             isAdminPresent.get().setProfilePath(adminDTO.getProfilePath());
             isAdminPresent.get().setStatus(adminDTO.getStatus());
+            isAdminPresent.get().setUpdateddate(LocalDateTime.now());
             adminRepository.save(isAdminPresent.get());
-            return isAdminPresent.get();
+            String body = "Admin is added successfully with adminId " + isAdminPresent.get().getAdminId();
+            String subject = "Admin registration successful";
+            mailService.send(isAdminPresent.get().getEmailId(), subject, body);
+            return isAdminsPresent.get();
+        } else{
+               throw new AdminNotFoundException(400, "Admin not found");
+           }
         }
-        throw new AdminNotFoundException(400, "Admin not found");
+        throw new AdminNotFoundException(400, "token is wrong");
     }
 
     @Override
     public List<AdminModel> getAdminData(String token) {
-        Long admId = tokenUtil.decodeToken(token);
-        Optional<AdminModel> isAdminPresent = adminRepository.findById(admId);
+        Long userId = tokenUtil.decodeToken(token);
+        Optional<AdminModel> isAdminPresent = adminRepository.findById(userId);
         if (isAdminPresent.isPresent()) {
             List<AdminModel> getalladmindata = adminRepository.findAll();
             if (getalladmindata.size() > 0) {
                 return getalladmindata;
-            }
+            } else {
             throw new AdminNotFoundException(400, "Admin not Found");
+            }
         }
-        throw new AdminNotFoundException(400,"Admin not found");
+        throw new AdminNotFoundException(400,"token does not match");
     }
 
     @Override
-    public AdminModel getDeleteAdmin(Long id) {
-        Optional<AdminModel> isAdminPresent = adminRepository.findById(id);
+    public AdminModel getDeleteAdmin(Long id, String token) {
+        Long userId = tokenUtil.decodeToken(token);
+        Optional<AdminModel> isAdminPresent = adminRepository.findById(userId);
         if (isAdminPresent.isPresent()) {
+            Optional<AdminModel> isAdminPresents = adminRepository.findById(id);
+            if(isAdminPresents.isPresent()){
             adminRepository.save(isAdminPresent.get());
             return isAdminPresent.get();
+            }else{
+                throw new AdminNotFoundException(400, "Admin is not present ");
+            }
         }
-        throw new AdminNotFoundException(400, "Admin does not found");
+        throw new AdminNotFoundException(400, "Token is wrong");
     }
+
 
     @Override
     public Response login(String email, String password) {
@@ -84,9 +101,9 @@ public class AdminService implements IAdminService {
                 String token = tokenUtil.createToken(isEmailPresent.get().getAdminId());
                 return new Response("Login is sucessfull", 200, token);
             }
-            throw new AdminNotFoundException(200, "email is not present");
+            throw new AdminNotFoundException(200, "Password is wrong");
         }
-        throw new AdminNotFoundException(400, "email is not present");
+        throw new AdminNotFoundException(400, "Not admi is present");
     }
 
     @Override
@@ -109,10 +126,11 @@ public class AdminService implements IAdminService {
             String token = tokenUtil.createToken(isEmailPresent.get().getAdminId());
             String url = "http://localhost:8085/lmsproject/changePassword";
             String subject = "reset password";
-            String body = "For reset password click this link" +url+"use this to reset"+token;
+            String body = "For reset password click on this link" + url + "use this to reset password" + token;
             mailService.send(isEmailPresent.get().getEmailId(), body, subject);
+            return isEmailPresent.get();
         }
-        return isEmailPresent.get();
+       throw new AdminNotFoundException(400,"token wrong");
         }
 
 }

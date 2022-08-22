@@ -13,13 +13,11 @@ public class AdminDTO {
     @Pattern(regexp = "[A-Z][a-zA-Z]{2,}", message = "Invalid lastname")
     private String lastName;
     @Pattern(regexp = "[6-9][0-9]{9}", message = "Invalid number")
-    private long mobile;
+    private String mobile;
     @Pattern(regexp = "[a-z][A-Z a-z 0-9]+[@][a-z]+[.][a-z]{2,}", message = "Invalid Email")
     private String emailId;
     private String profilePath;
     private String status;
     private String password;
-    private LocalDateTime registereddate;
-    private LocalDateTime updateddate;
 
 }

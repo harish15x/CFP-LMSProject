@@ -7,7 +7,6 @@ import com.bridgelabz.lmsproject.service.IMentorService;
 import com.bridgelabz.lmsproject.service.MentorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,7 +24,7 @@ public class MentorController {
         }
 
         @PutMapping("update/{id}")
-        public MentorModel updateMentor(@RequestHeader String token, @RequestBody MentorDTO mentorDTO, @PathVariable Long id){
+        public MentorModel updateMentor(@RequestHeader String token, @Valid @RequestBody MentorDTO mentorDTO, @PathVariable Long id){
             return mentorService.updateMentor(token, mentorDTO, id);
         }
 
@@ -40,7 +39,7 @@ public class MentorController {
         }
 
         @GetMapping("getbyid")
-        public List<MentorModel> getdBYId (@RequestParam String employeeId   ){
+        public List<MentorModel> getdBYId (@RequestParam String employeeId ){
             return mentorService.getById(employeeId);
         }
 

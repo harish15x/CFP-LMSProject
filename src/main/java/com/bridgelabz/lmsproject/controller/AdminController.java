@@ -23,7 +23,7 @@ public class AdminController {
         }
 
         @PutMapping("update/{id}")
-        public AdminModel updateAdmin(@RequestHeader String token, @Valid @RequestBody AdminDTO adminDTO, @PathVariable long id){
+        public AdminModel updateAdmin(@RequestHeader String token, @Valid @RequestParam AdminDTO adminDTO, @PathVariable long id){
                 return adminService.updateAdmin(id, token, adminDTO);
         }
 
@@ -32,9 +32,9 @@ public class AdminController {
                 return adminService.getAdminData(token);
         }
 
-        @DeleteMapping("deleteadmin")
-        public AdminModel deleteAdmin(@PathVariable Long id){
-                return adminService.getDeleteAdmin(id);
+        @DeleteMapping("deleteadmin/{id}")
+        public AdminModel deleteAdmin(@PathVariable Long id, @RequestHeader String token){
+                return adminService.getDeleteAdmin(id, token);
         }
 
         @PostMapping("login")

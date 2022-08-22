@@ -32,7 +32,7 @@ public class CandidateModel {
     private LocalDateTime updatedTimeStamp;
 
     public CandidateModel(CandidateDTO candidateDTO){
-        this.candidateId = candidateDTO.getId();
+
         this.cicId = candidateDTO.getCicId();
         this.fullName = candidateDTO.getFullName();
         this.email = candidateDTO.getEmail();

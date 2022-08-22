@@ -11,11 +11,9 @@ public interface IAdminService {
 
     AdminModel updateAdmin(long id, String token, AdminDTO adminDTO);
 
-
     List<AdminModel> getAdminData(String token);
 
-
-    AdminModel getDeleteAdmin(Long id);
+    AdminModel getDeleteAdmin(Long id, String token);
 
     Response login(String email, String password);
 

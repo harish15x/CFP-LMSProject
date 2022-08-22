@@ -8,6 +8,7 @@ import com.bridgelabz.lmsproject.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ public class CandidateService implements ICandidateService{
     @Override
     public CandidateModel addCandidate(CandidateDTO candidateDTO) {
         CandidateModel candidateModel = new CandidateModel(candidateDTO);
+        candidateModel.setCreationTimeStamp(LocalDateTime.now());
         candidateRepository.save(candidateModel);
         return candidateModel;
     }
