@@ -23,7 +23,7 @@ public class AdminController {
         }
 
         @PutMapping("update/{id}")
-        public AdminModel updateAdmin(@RequestHeader String token, @Valid @RequestBody AdminDTO adminDTO, @PathVariable long id){
+        public AdminModel updateAdmin(@RequestHeader String token, @Valid @RequestParam AdminDTO adminDTO, @PathVariable long id){
                 return adminService.updateAdmin(id, token, adminDTO);
         }
 

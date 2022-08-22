@@ -32,7 +32,7 @@ public class AdminService implements IAdminService {
         String body = "Admin is added sucessfully with adminid " + adminModel.getAdminId();
         String subject = "Admin registration successfully";
         mailService.send(adminModel.getEmailId(),body, subject);
-        return null;
+        return adminModel;
     }
 
     @Override
