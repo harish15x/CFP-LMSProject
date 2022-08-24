@@ -19,8 +19,8 @@ public class BankDetailsController {
     IBankDetailService bankDetailService;
 
     @PostMapping("addbankdetails")
-    public BankDetailsModel addBankDetails( @Valid @RequestBody BankDetailsDTO bankDetailsDTO){
-        return bankDetailService.addBankDetails(bankDetailsDTO);
+    public BankDetailsModel addBankDetails( @Valid @RequestBody BankDetailsDTO bankDetailsDTO, String token){
+        return bankDetailService.addBankDetails(bankDetailsDTO, token);
     }
 
     @PutMapping("update/{id}")

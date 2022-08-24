@@ -25,10 +25,14 @@ public class BankDetailService implements IBankDetailService {
     MailService mailService;
 
     @Override
-    public BankDetailsModel addBankDetails(BankDetailsDTO bankDetailsDTO) {
+    public BankDetailsModel addBankDetails(BankDetailsDTO bankDetailsDTO, String token) {
+
        BankDetailsModel bankDetailsModel = new BankDetailsModel(bankDetailsDTO);
        bankDetailsDTO.setCreatedDateTime(LocalDateTime.now());
        bankDetailsRepository.save(bankDetailsModel);
+        String body = "admin is added sucessfully with admin id " + bankDetailsModel.getId();
+        String subject = "admin registration successfully";
+        mailService.send(bankDetailsModel.getEmailId(),body, subject);
         return bankDetailsModel;
     }
 

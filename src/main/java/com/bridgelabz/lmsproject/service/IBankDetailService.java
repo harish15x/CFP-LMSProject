@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IBankDetailService {
 
-    BankDetailsModel addBankDetails(BankDetailsDTO bankDetailsDTO);
+    BankDetailsModel addBankDetails(BankDetailsDTO bankDetailsDTO, String token);
 
     BankDetailsModel updateBankDetails(String token, BankDetailsDTO bankDetailsDTO, Long id);
 

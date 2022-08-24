@@ -17,6 +17,7 @@ public class BankDetailsModel {
     private String accountNumber;
     private String branch;
     private Double accountHolderName;
+    private String emailId;
     private String creatorUser;
     private String updatedUser;
     private LocalDateTime createdDateTime;
@@ -27,6 +28,7 @@ public class BankDetailsModel {
         this.accountNumber = bankDetailsDTO.getAccountNumber();
         this.branch = bankDetailsDTO.getBranch();
         this.accountHolderName = bankDetailsDTO.getAccountHolderName();
+        this.emailId = bankDetailsDTO.getEmailId();
         this.creatorUser = bankDetailsDTO.getCreatorUser();
         this.updatedUser = bankDetailsDTO.getUpdatedUser();
         this.createdDateTime = LocalDateTime.now();
