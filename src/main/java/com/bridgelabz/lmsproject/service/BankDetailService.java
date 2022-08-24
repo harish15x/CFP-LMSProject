@@ -1,8 +1,11 @@
 package com.bridgelabz.lmsproject.service;
 
 import com.bridgelabz.lmsproject.dto.BankDetailsDTO;
+import com.bridgelabz.lmsproject.exception.AdminNotFoundException;
 import com.bridgelabz.lmsproject.exception.BankDetailsNotfoundException;
+import com.bridgelabz.lmsproject.model.AdminModel;
 import com.bridgelabz.lmsproject.model.BankDetailsModel;
+import com.bridgelabz.lmsproject.repository.AdminRepository;
 import com.bridgelabz.lmsproject.repository.BankDetailsRepository;
 import com.bridgelabz.lmsproject.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,9 @@ public class BankDetailService implements IBankDetailService {
     BankDetailsRepository bankDetailsRepository;
 
     @Autowired
+    AdminRepository adminRepository;
+
+    @Autowired
     TokenUtil tokenUtil;
 
     @Autowired
@@ -26,14 +32,18 @@ public class BankDetailService implements IBankDetailService {
 
     @Override
     public BankDetailsModel addBankDetails(BankDetailsDTO bankDetailsDTO, String token) {
-
-       BankDetailsModel bankDetailsModel = new BankDetailsModel(bankDetailsDTO);
-       bankDetailsDTO.setCreatedDateTime(LocalDateTime.now());
-       bankDetailsRepository.save(bankDetailsModel);
-        String body = "admin is added sucessfully with admin id " + bankDetailsModel.getId();
-        String subject = "admin registration successfully";
-        mailService.send(bankDetailsModel.getEmailId(),body, subject);
-        return bankDetailsModel;
+        Long userId = tokenUtil.decodeToken(token);
+        Optional<AdminModel> isAdminPresent = adminRepository.findById(userId);
+        if (isAdminPresent.isPresent()) {
+            BankDetailsModel bankDetailsModel = new BankDetailsModel(bankDetailsDTO);
+            bankDetailsDTO.setCreatedDateTime(LocalDateTime.now());
+            bankDetailsRepository.save(bankDetailsModel);
+            String body = "admin is added sucess" + bankDetailsModel.getId();
+            String subject = "admin registration successfully";
+            mailService.send(bankDetailsModel.getEmailId(), body, subject);
+            return bankDetailsModel;
+        }
+        throw new AdminNotFoundException(400," token is wrong ");
     }
 
     @Override
@@ -77,6 +87,5 @@ public class BankDetailService implements IBankDetailService {
         }
         throw new BankDetailsNotfoundException(400,"Bank does not found");
     }
-
 
 }
