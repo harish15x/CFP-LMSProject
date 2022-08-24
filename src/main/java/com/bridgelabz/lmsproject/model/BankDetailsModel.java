@@ -17,18 +17,16 @@ public class BankDetailsModel {
     private String accountNumber;
     private String branch;
     private Double accountHolderName;
-    private String email;
     private String creatorUser;
     private String updatedUser;
     private LocalDateTime createdDateTime;
     private LocalDateTime updateddateTime;
 
     public BankDetailsModel(BankDetailsDTO bankDetailsDTO){
-
+        this.id = bankDetailsDTO.getId();
         this.accountNumber = bankDetailsDTO.getAccountNumber();
         this.branch = bankDetailsDTO.getBranch();
         this.accountHolderName = bankDetailsDTO.getAccountHolderName();
-        this.email = bankDetailsDTO.getEmail();
         this.creatorUser = bankDetailsDTO.getCreatorUser();
         this.updatedUser = bankDetailsDTO.getUpdatedUser();
         this.createdDateTime = LocalDateTime.now();

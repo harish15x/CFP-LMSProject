@@ -2,6 +2,7 @@ package com.bridgelabz.lmsproject.controller;
 
 import com.bridgelabz.lmsproject.dto.BankDetailsDTO;
 import com.bridgelabz.lmsproject.model.BankDetailsModel;
+import com.bridgelabz.lmsproject.model.CandidateModel;
 import com.bridgelabz.lmsproject.service.IBankDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,8 @@ public class BankDetailsController {
     IBankDetailService bankDetailService;
 
     @PostMapping("addbankdetails")
-    public BankDetailsModel addBankDetails( @Valid @RequestBody BankDetailsDTO bankDetailsDTO, @RequestHeader String token){
-        return bankDetailService.addBankDetails(bankDetailsDTO, token);
+    public BankDetailsModel addBankDetails( @Valid @RequestBody BankDetailsDTO bankDetailsDTO){
+        return bankDetailService.addBankDetails(bankDetailsDTO);
     }
 
     @PutMapping("update/{id}")
@@ -33,8 +34,8 @@ public class BankDetailsController {
     }
 
     @DeleteMapping("deletebankdetail")
-    public BankDetailsModel deleteBankDetails(@PathVariable Long id, @RequestHeader String token){
-        return bankDetailService.deleteBankDetails(id, token);
+    public BankDetailsModel deleteBankDetails(@PathVariable Long id){
+        return bankDetailService.deleteBankDetails(id);
     }
 
 

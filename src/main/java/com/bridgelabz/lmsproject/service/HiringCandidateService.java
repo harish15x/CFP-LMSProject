@@ -72,6 +72,7 @@ public class HiringCandidateService implements IHiringCandidateService {
         Long userId = tokenUtil.decodeToken(token);
         Optional<HiringCandidateModel> isHiringCandidatePrsent = hiringCandidateRepository.findById(id);
         if (isHiringCandidatePrsent.isPresent()){
+
         }
         return null;
     }
