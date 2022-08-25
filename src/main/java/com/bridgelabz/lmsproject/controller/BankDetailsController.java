@@ -19,7 +19,7 @@ public class BankDetailsController {
     IBankDetailService bankDetailService;
 
     @PostMapping("addbankdetails")
-    public BankDetailsModel addBankDetails( @Valid @RequestBody BankDetailsDTO bankDetailsDTO, String token){
+    public BankDetailsModel addBankDetails( @Valid @RequestBody BankDetailsDTO bankDetailsDTO, @RequestHeader String token){
         return bankDetailService.addBankDetails(bankDetailsDTO, token);
     }
 
@@ -33,9 +33,9 @@ public class BankDetailsController {
         return bankDetailService.getBankDetails(token);
     }
 
-    @DeleteMapping("deletebankdetail")
-    public BankDetailsModel deleteBankDetails(@PathVariable Long id){
-        return bankDetailService.deleteBankDetails(id);
+    @DeleteMapping("deletebankdetail/{id}")
+    public BankDetailsModel deleteBankDetails(@PathVariable Long id, @RequestHeader String token){
+        return bankDetailService.deleteBankDetails(id, token);
     }
 
 

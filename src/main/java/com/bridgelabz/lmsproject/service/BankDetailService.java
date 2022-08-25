@@ -49,6 +49,8 @@ public class BankDetailService implements IBankDetailService {
     @Override
     public BankDetailsModel updateBankDetails(String token, BankDetailsDTO bankDetailsDTO, Long id) {
         Long userId = tokenUtil.decodeToken(token);
+        Optional<AdminModel> isAdminPresent = adminRepository.findById(userId);
+        if(isAdminPresent.isPresent()){
         Optional<BankDetailsModel> isBankDetailPresent = bankDetailsRepository.findById(id);
         if (isBankDetailPresent.isPresent()){
             isBankDetailPresent.get().setId(bankDetailsDTO.getId());
@@ -60,32 +62,42 @@ public class BankDetailService implements IBankDetailService {
             isBankDetailPresent.get().setCreatedDateTime(bankDetailsDTO.getCreatedDateTime());
             isBankDetailPresent.get().setUpdateddateTime(bankDetailsDTO.getUpdateddateTime());
             bankDetailsRepository.save(isBankDetailPresent.get());
+            return isBankDetailPresent.get();
+            } else {
+            throw new BankDetailsNotfoundException(400,"bank does not found");
+            }
         }
-        throw new BankDetailsNotfoundException(400, "bank details does not found");
+        throw new AdminNotFoundException(400, "token is wrong");
     }
 
     @Override
     public List<BankDetailsModel> getBankDetails(String token) {
-        Long bankId = tokenUtil.decodeToken(token);
-        Optional<BankDetailsModel> isgetBankDetails = bankDetailsRepository.findById(bankId);
-        if (isgetBankDetails.isPresent()){
+        Long userId = tokenUtil.decodeToken(token);
+        Optional<AdminModel> isAdminPrsent = adminRepository.findById(userId);
+        if (isAdminPrsent.isPresent()){
         List<BankDetailsModel> getBankDetails = bankDetailsRepository.findAll();
         if (getBankDetails.size() > 0 ){
             return getBankDetails;
-          }
+           }
             throw new BankDetailsNotfoundException(400, "Bank details does not found ");
         }
-          throw new BankDetailsNotfoundException(400, "Bank details does not found");
+          throw new AdminNotFoundException(400, "Bank details does not found");
     }
 
     @Override
-    public BankDetailsModel deleteBankDetails(Long id) {
-        Optional<BankDetailsModel> isBankDetails = bankDetailsRepository.findById(id);
-        if (isBankDetails.isPresent()){
-            bankDetailsRepository.save(isBankDetails.get());
-            return isBankDetails.get();
+    public BankDetailsModel deleteBankDetails(Long id, String token) {
+        Long userId = tokenUtil.decodeToken(token);
+        Optional<AdminModel> isAdminPresent = adminRepository.findById(userId);
+        if (isAdminPresent.isPresent()) {
+            Optional<BankDetailsModel> isBankDetails = bankDetailsRepository.findById(id);
+            if (isBankDetails.isPresent()) {
+                bankDetailsRepository.save(isBankDetails.get());
+                return isBankDetails.get();
+            } else {
+                throw new BankDetailsNotfoundException(400, "Bank does not found");
+            }
         }
-        throw new BankDetailsNotfoundException(400,"Bank does not found");
-    }
+            throw new AdminNotFoundException(400, "Token is wrong");
+        }
 
-}
+    }

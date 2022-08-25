@@ -14,5 +14,5 @@ public interface IBankDetailService {
 
     List<BankDetailsModel> getBankDetails(String token);
 
-    BankDetailsModel deleteBankDetails(Long id);
+    BankDetailsModel deleteBankDetails(Long id, String token);
 }

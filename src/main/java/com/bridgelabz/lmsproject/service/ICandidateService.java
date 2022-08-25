@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ICandidateService {
 
-    CandidateModel addCandidate(CandidateDTO candidateDTO);
+    CandidateModel addCandidate(CandidateDTO candidateDTO, String token);
 
     CandidateModel updadateCandidate(Long id,String token, CandidateDTO candidateDTO);
 
@@ -15,5 +15,6 @@ public interface ICandidateService {
 
     CandidateModel getDeleteCandidate(long id, String token);
 
-    CandidateModel getCandidateStatus(String token);
+    CandidateModel getCandidateStatus(long id, String token);
+
 }

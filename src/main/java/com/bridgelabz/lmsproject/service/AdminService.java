@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @Service
 public class AdminService implements IAdminService {
+
     @Autowired
     AdminRepository adminRepository;
 
@@ -29,8 +30,8 @@ public class AdminService implements IAdminService {
         AdminModel adminModel = new AdminModel(adminDTO);
         adminModel.setRegistereddate(LocalDateTime.now());
         adminRepository.save(adminModel);
-        String body = "admin is added sucessfully with admin id " + adminModel.getAdminId();
-        String subject = "admin registration successfully";
+        String body = "admin added sucessfully " + adminModel.getAdminId();
+        String subject = "admin registration completed";
         mailService.send(adminModel.getEmailId(),body, subject);
         return adminModel;
     }
@@ -50,15 +51,15 @@ public class AdminService implements IAdminService {
             isAdminPresent.get().setStatus(adminDTO.getStatus());
             isAdminPresent.get().setUpdateddate(LocalDateTime.now());
             adminRepository.save(isAdminPresent.get());
-            String body = "Admin is added successfully with adminId " + isAdminPresent.get().getAdminId();
-            String subject = "Admin registration successful";
+            String body = "Admin is added " + isAdminPresent.get().getAdminId();
+            String subject = "Admin registration complete";
             mailService.send(isAdminPresent.get().getEmailId(), subject, body);
             return isAdminsPresent.get();
-        } else{
+        } else {
                throw new AdminNotFoundException(400, "Admin not found");
            }
         }
-        throw new AdminNotFoundException(400, "token is wrong");
+        throw new AdminNotFoundException(400, "token does not match");
     }
 
     @Override
@@ -89,9 +90,8 @@ public class AdminService implements IAdminService {
                 throw new AdminNotFoundException(400, "Admin is not present ");
             }
         }
-        throw new AdminNotFoundException(400, "Token is wrong");
+        throw new AdminNotFoundException(400, " Token does not match ");
     }
-
 
     @Override
     public Response login(String email, String password) {
@@ -101,7 +101,7 @@ public class AdminService implements IAdminService {
                 String token = tokenUtil.createToken(isEmailPresent.get().getAdminId());
                 return new Response("Login is sucessfull", 200, token);
             }
-            throw new AdminNotFoundException(200, "Password is wrong");
+            throw new AdminNotFoundException(200, "password incorrect");
         }
         throw new AdminNotFoundException(400, "Not admi is present");
     }
@@ -115,7 +115,7 @@ public class AdminService implements IAdminService {
             adminRepository.save(isIdPresent.get());
             return isIdPresent.get();
         } else {
-            throw new AdminNotFoundException(400, "Password is worng");
+            throw new AdminNotFoundException(400, "token does not match");
         }
     }
 

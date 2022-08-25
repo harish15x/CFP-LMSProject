@@ -17,8 +17,8 @@ public class CandidateController {
     ICandidateService candidateService;
 
     @PostMapping("addcandidate")
-    public CandidateModel addCandidate(@Valid @RequestBody CandidateDTO candidateDTO){
-        return candidateService.addCandidate(candidateDTO);
+    public CandidateModel addCandidate(@Valid @RequestBody CandidateDTO candidateDTO, @RequestHeader String token){
+        return candidateService.addCandidate(candidateDTO, token);
     }
 
     @PutMapping("update/{id}")
@@ -36,9 +36,9 @@ public class CandidateController {
         return candidateService.getDeleteCandidate(id, token);
     }
 
-    @GetMapping("getcandidatestatus")
-    public CandidateModel getCandidateStatus(@RequestHeader String token){
-        return candidateService.getCandidateStatus(token);
+    @GetMapping("getcandidatestatus/{id}")
+    public CandidateModel getCandidateStatus(@PathVariable long id, @RequestHeader String token){
+        return candidateService.getCandidateStatus(id, token);
     }
 
 
