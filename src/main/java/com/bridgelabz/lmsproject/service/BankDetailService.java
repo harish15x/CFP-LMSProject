@@ -38,7 +38,7 @@ public class BankDetailService implements IBankDetailService {
             BankDetailsModel bankDetailsModel = new BankDetailsModel(bankDetailsDTO);
             bankDetailsDTO.setCreatedDateTime(LocalDateTime.now());
             bankDetailsRepository.save(bankDetailsModel);
-            String body = "admin is added sucess" + bankDetailsModel.getId();
+            String body = "admin is added success" + bankDetailsModel.getId();
             String subject = "admin registration successfully";
             mailService.send(bankDetailsModel.getEmailId(), body, subject);
             return bankDetailsModel;
@@ -57,8 +57,6 @@ public class BankDetailService implements IBankDetailService {
             isBankDetailPresent.get().setAccountNumber(bankDetailsDTO.getAccountNumber());
             isBankDetailPresent.get().setBranch(bankDetailsDTO.getBranch());
             isBankDetailPresent.get().setAccountHolderName(bankDetailsDTO.getAccountHolderName());
-            isBankDetailPresent.get().setCreatorUser(bankDetailsDTO.getCreatorUser());
-            isBankDetailPresent.get().setUpdatedUser(bankDetailsDTO.getUpdatedUser());
             isBankDetailPresent.get().setCreatedDateTime(bankDetailsDTO.getCreatedDateTime());
             isBankDetailPresent.get().setUpdateddateTime(bankDetailsDTO.getUpdateddateTime());
             bankDetailsRepository.save(isBankDetailPresent.get());

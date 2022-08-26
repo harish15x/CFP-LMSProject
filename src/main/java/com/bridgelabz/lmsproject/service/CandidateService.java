@@ -35,15 +35,16 @@ public class CandidateService implements ICandidateService{
         Long userId = tokenUtil.decodeToken(token);
         Optional<AdminModel> isAdminPresent = adminRepository.findById(userId);
         if (isAdminPresent.isPresent()){
-        CandidateModel candidateModel = new CandidateModel(candidateDTO);
-        candidateModel.setCreationTimeStamp(LocalDateTime.now());
-        candidateRepository.save(candidateModel);
-        String body = "Candidate is added successfully with candidateId " + candidateModel.getCandidateId();
-        String subject = "Candidate registration successfully";
-        mailService.send(candidateModel.getEmail(), subject, body);
-        return candidateModel;
-        }
+             CandidateModel candidateModel = new CandidateModel(candidateDTO);
+             candidateModel.setCreationTimeStamp(LocalDateTime.now());
+             candidateRepository.save(candidateModel);
+             String body = "Candidate is added successfully with candidateId " + candidateModel.getCandidateId();
+             String subject = "Candidate registration successfully";
+             mailService.send(candidateModel.getEmail(), subject, body);
+           return candidateModel;
+        } else {
         throw new CandidateNotFoundException(400, "token wrong");
+       }
     }
 
     @Override
@@ -71,11 +72,11 @@ public class CandidateService implements ICandidateService{
             isCandidatePresent.get().setUpdatedTimeStamp(candidateDTO.getUpdatedTimeStamp());
             candidateRepository.save(isCandidatePresent.get());
             return isCandidatePresent.get();
-            } else {
-            throw new CandidateNotFoundException(400,"Candidate not found");
-            }
+        } else {
+            throw new CandidateNotFoundException(400," Candidate not found ");
         }
-           throw new AdminNotFoundException(400, "token is wrong");
+        }
+           throw new AdminNotFoundException(400, " token is wrong ");
     }
 
     @Override

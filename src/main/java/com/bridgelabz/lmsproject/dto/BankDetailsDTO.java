@@ -12,6 +12,7 @@ public class BankDetailsDTO {
     private String branch;
     private Double accountHolderName;
     private String emailId;
+    private String ifsccode;
     private String creatorUser;
     private String updatedUser;
     private LocalDateTime createdDateTime;
